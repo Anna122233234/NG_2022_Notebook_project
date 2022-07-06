@@ -56,18 +56,13 @@
     <addaction name="actionPaste"/>
     <addaction name="actionCut"/>
     <addaction name="actionUndo"/>
-    <addaction name="actionRedo"/>
     <addaction name="actionPrint"/>
+    <addaction name="actionRedo"/>
    </widget>
    <widget class="QMenu" name="menuTextColor">
     <property name="title">
      <string>TextColor</string>
     </property>
-    <addaction name="actionRed"/>
-    <addaction name="actionBlack"/>
-    <addaction name="actionYellow"/>
-    <addaction name="actionBlue"/>
-    <addaction name="actionWhile"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -147,18 +142,6 @@
     <string>Undo</string>
    </property>
   </action>
-  <action name="actionRedo">
-   <property name="icon">
-    <iconset resource="Resources.qrc">
-     <normaloff>:/imgs/Icons/Rendo.jpg</normaloff>:/imgs/Icons/Rendo.jpg</iconset>
-   </property>
-   <property name="text">
-    <string>Redo</string>
-   </property>
-   <property name="toolTip">
-    <string>Redo</string>
-   </property>
-  </action>
   <action name="actionPrint">
    <property name="icon">
     <iconset>
@@ -169,29 +152,14 @@
     <string>Print</string>
    </property>
   </action>
-  <action name="actionRed">
-   <property name="text">
-    <string>Red</string>
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset>
+     <normalon>Icons/Rendo.jpg</normalon>
+    </iconset>
    </property>
-  </action>
-  <action name="actionBlack">
    <property name="text">
-    <string>Black</string>
-   </property>
-  </action>
-  <action name="actionYellow">
-   <property name="text">
-    <string>Yellow</string>
-   </property>
-  </action>
-  <action name="actionBlue">
-   <property name="text">
-    <string>Blue</string>
-   </property>
-  </action>
-  <action name="actionWhile">
-   <property name="text">
-    <string>While</string>
+    <string>Redo</string>
    </property>
   </action>
  </widget>
