@@ -26,6 +26,18 @@ private slots:
     void on_actionCut_triggered();
     void on_actionUndo_triggered();
     void on_actionRedo_triggered();
+    void on_actionRed_triggered();
+    void on_actionGreen_triggered();
+    void on_actionGray_triggered();
+
+    void on_actionWhite_triggered();
+
+    void on_actionSave_triggered();
+
+    void on_Edit_clicked();
+
+    void on_Search_clicked();
+
 private:
     Ui::Notepad *ui;
     QString currentFile = "";
