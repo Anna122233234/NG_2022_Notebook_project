@@ -19,7 +19,6 @@ private slots:
     void on_actionNew_triggered();
     void on_actionOpen_triggered();
     void on_actionSave_as_triggered();
-    void on_actionPrint_triggered();
     void on_actionExit_triggered();
     void on_actionCopy_triggered();
     void on_actionPaste_triggered();
@@ -29,14 +28,12 @@ private slots:
     void on_actionRed_triggered();
     void on_actionGreen_triggered();
     void on_actionGray_triggered();
-
     void on_actionWhite_triggered();
-
     void on_actionSave_triggered();
-
-    void on_Edit_clicked();
-
-    void on_Search_clicked();
+    void systemfile();
+    void search();
+    void addfiles();
+    void deleteitem();
 
 private:
     Ui::Notepad *ui;
