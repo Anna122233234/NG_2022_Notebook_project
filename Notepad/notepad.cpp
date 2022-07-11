@@ -1,6 +1,7 @@
 #include "notepad.h"
 #include "ui_notepad.h"
 
+#include <QDebug>
 #include <fstream>
 #include <QFile>
 #include <QFileDialog>
@@ -17,8 +18,10 @@ Notepad::Notepad(QWidget *parent)
 {
     ui->setupUi(this);
     //this->setCentralWidget(ui->TextWindow);
-    connect(ui->Edit,&QPushButton::clicked,this,&Notepad::on_Edit_clicked);
-
+    connect(ui->Add,&QPushButton::clicked,this,&Notepad::systemfile);
+    connect(ui->Search,&QPushButton::clicked,this,&Notepad::search);
+    connect(ui->ListW,&QListWidget::clicked,this,&Notepad::addfiles);
+    connect(ui->Delete,&QPushButton::clicked,this,&Notepad::deleteitem);
 }
 
 Notepad::~Notepad()
@@ -30,7 +33,6 @@ void Notepad::on_actionNew_triggered()
 {
     currentFile.clear();
     ui->TextWindow->setText(QString());
-
 }
 
 void Notepad::on_actionOpen_triggered()
@@ -44,7 +46,6 @@ void Notepad::on_actionOpen_triggered()
     }
     setWindowTitle(filename);
     QTextStream in(&file);
-    ui->TextWindow->setTextColor(globalCol);
     ui->TextWindow->setText(in.readAll());
     file.close();
 }
@@ -98,13 +99,6 @@ void Notepad::on_actionRedo_triggered()
 
 void Notepad::on_actionRed_triggered()
 {
-
-//   bool colorSelected;
-//  QString color = QColorDialog::getColor(&colorSelected, this);
-//  if (colorSelected)
-//          ui->TextWindow->setTextColor(color);
-
-
     ui->TextWindow->setTextColor(Qt::red);
     QString color = ui->TextWindow->textColor().name();
     globalCol = color;
@@ -134,30 +128,96 @@ void Notepad::on_actionWhite_triggered()
 
 void Notepad::on_actionSave_triggered()
 {
-    QFile file("D:/Notebook/NG_2022_Notebook_project/" + ui->Name->text());
+    QFile file("D:/Notebook/NG_2022_Notebook_project/" + ui->Name->text() + ".txt");
     if(!file.open(QFile:: WriteOnly | QFile::Text)){
         QMessageBox::warning(this, "Warning", "Cannot save file" + file.errorString());
         return;
     }
-}
-
-void Notepad::on_Edit_clicked()
-{
-    QFile file("D:/Notebook/NG_2022_Notebook_project/Notepad/SystemFile.txt");
-    if(!file.open(QFile:: WriteOnly | QFile::Text)){
-        QMessageBox::warning(this, "Warning", "Cannot save file" + file.errorString());
-        return;
-    }
-        QString name = ui->Name->text();
-        QString tag = ui->Tag->text();
-        QTextStream stream(&file);
-        stream << name << Qt::endl << tag;
+    QString text = ui->TextWindow->toPlainText();
+    file.write(text.toUtf8());
     file.close();
 }
 
-
-void Notepad::on_Search_clicked()
+void Notepad::systemfile()
 {
-
+    QFile sysfile("D:/Notebook/NG_2022_Notebook_project/Notepad/SystemFile.txt");
+    QString name = ui->Name->text();
+    QString tag = ui->Tag->text();
+    QString note = name + ":" + tag + "\n";
+    if(!sysfile.isOpen()){
+        sysfile.open(QIODevice::Append);
+        sysfile.write(note.toUtf8());
+        sysfile.close();
+    }
 }
+
+void Notepad::search()
+{
+    QFile file("D:/Notebook/NG_2022_Notebook_project/Notepad/SystemFile.txt");
+    if(!file.isOpen()){
+        file.open(QIODevice::ReadOnly);
+        QString ntfile = file.readAll();
+        ntfile = ntfile.remove(ntfile.length()-1,1);
+        QStringList list = ntfile.split("\n");
+        qDebug() << "List = " << list;
+        foreach(QString item, list)
+            qDebug() << "List item = " << item;
+        QString name = ui->Name->text();
+        QString tag = ui->Tag->text();
+        QString note = name + ":" + tag + "\n";
+        qDebug() << note;
+        qDebug () << "This is name: " <<name ;
+        qDebug () << "This is note: " <<tag ;
+        foreach(QString item, list){
+            QStringList input = item.split(":");
+            if((name != ""  && name == input.at(0))){
+                if(tag == "" || tag == input.at(1)){
+                    qDebug() << item;
+                    ui->ListW->addItem(item);
+                }
+            }
+            else if (tag != "" && tag == input.at(1)){
+                qDebug() << item;
+                ui->ListW->addItem(item);
+            }
+        }
+        file.close();
+    }
+}
+
+void Notepad::addfiles()
+{
+    QFile filename("D:/Notebook/NG_2022_Notebook_project/Notepad/SystemFile.txt");
+    if(!filename.isOpen()){
+        filename.open(QIODevice::ReadOnly);
+        QString ntfile = filename.readAll();
+        ntfile = ntfile.remove(ntfile.length()-1,1);
+        QStringList list = ntfile.split("\n");
+        qDebug() << "LIST++" << list;
+        QString name = ui->Name->text();
+        QString tag = ui->Tag->text();
+        QString note = name + ":" + tag + "\n";
+        foreach(QString item, list){
+            QStringList input = item.split(":");
+            if(tag == input.at(1)){
+                name = input.at(0);
+                qDebug() << "name___" << name;
+            }
+        }
+        QFile secondfile("D:/Notebook/NG_2022_Notebook_project/" + name + ".txt");
+        if(!secondfile.isOpen()){
+            secondfile.open(QIODevice::ReadWrite);
+            ui->TextWindow->setText(secondfile.readAll());
+            secondfile.close();
+        }
+    }
+    filename.close();
+}
+
+void Notepad::deleteitem()
+{
+    QListWidgetItem *it = ui->ListW->takeItem(ui->ListW->currentRow());
+        delete it;
+}
+
 
