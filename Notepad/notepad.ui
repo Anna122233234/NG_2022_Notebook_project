@@ -23,7 +23,7 @@
       <x>20</x>
       <y>30</y>
       <width>561</width>
-      <height>441</height>
+      <height>391</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -126,6 +126,7 @@
     </property>
    </widget>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -139,7 +140,6 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave_as"/>
     <addaction name="actionExit"/>
@@ -159,25 +159,11 @@
     <property name="title">
      <string>TextColor</string>
     </property>
-    <addaction name="actionRed"/>
-    <addaction name="actionGreen"/>
-    <addaction name="actionGray"/>
-    <addaction name="actionWhite"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuTextColor"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionNew">
-   <property name="icon">
-    <iconset resource="Resources.qrc">
-     <normaloff>:/imgs/Icons/New.jpg</normaloff>:/imgs/Icons/New.jpg</iconset>
-   </property>
-   <property name="text">
-    <string>New</string>
-   </property>
-  </action>
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="Resources.qrc">
@@ -252,29 +238,14 @@
     <string>Redo</string>
    </property>
   </action>
-  <action name="actionRed">
-   <property name="text">
-    <string>Red</string>
-   </property>
-  </action>
-  <action name="actionGreen">
-   <property name="text">
-    <string>Green</string>
-   </property>
-  </action>
-  <action name="actionGray">
-   <property name="text">
-    <string>Gray</string>
-   </property>
-  </action>
-  <action name="actionWhite">
-   <property name="text">
-    <string>White</string>
-   </property>
-  </action>
   <action name="actionSave">
    <property name="text">
     <string>Save</string>
+   </property>
+  </action>
+  <action name="actionred">
+   <property name="text">
+    <string>Red</string>
    </property>
   </action>
  </widget>
