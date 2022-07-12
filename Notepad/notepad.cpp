@@ -219,5 +219,3 @@ void Notepad::deleteitem()
     QListWidgetItem *it = ui->ListW->takeItem(ui->ListW->currentRow());
         delete it;
 }
-
-
