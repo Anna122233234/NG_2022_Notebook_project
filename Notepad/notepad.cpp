@@ -17,10 +17,27 @@ Notepad::Notepad(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Notepad)
 {
-//    Red = new QAction();
-//    ui->menuTextColor->addAction("Red");
-
     ui->setupUi(this);
+    Red = new QAction("Red");
+    ui->menuTextColor->addAction(Red);
+
+    Blue = new QAction("Blue");
+    ui->menuTextColor->addAction(Blue);
+
+    Yellow = new QAction("Yellow");
+    ui->menuTextColor->addAction(Yellow);
+
+    Green = new QAction("Green");
+    ui->menuTextColor->addAction(Green);
+
+    Gray = new QAction("Gray");
+    ui->menuTextColor->addAction(Gray);
+
+    connect(Red,&QAction::triggered,this,&Notepad::setRedColor);
+    connect(Blue,&QAction::triggered,this,&Notepad::setBlueColor);
+    connect(Yellow,&QAction::triggered,this,&Notepad::setYellowColor);
+    connect(Green,&QAction::triggered,this,&Notepad::setGreenColor);
+    connect(Gray,&QAction::triggered,this,&Notepad::setGrayColor);
     connect(ui->Add,&QPushButton::clicked,this,&Notepad::systemfile);
     connect(ui->Search,&QPushButton::clicked,this,&Notepad::search);
     connect(ui->ListW,&QListWidget::clicked,this,&Notepad::addfiles);
@@ -36,39 +53,6 @@ void Notepad::on_actionNew_triggered()
 {
     currentFile.clear();
     ui->TextWindow->setText(QString());
-}
-
-void Notepad::on_actionOpen_triggered()
-{
-    QString filename = QFileDialog::getOpenFileName(this, "Open the file");
-    QFile file(filename);
-    currentFile = filename;
-    if(!file.open(QIODevice:: ReadOnly | QFile::Text)){
-        QMessageBox::warning(this, "Warning", " Cannot open file" + file.errorString());
-        return;
-    }
-    setWindowTitle(filename);
-    QTextStream in(&file);
-
-    ui->TextWindow->setText(in.readAll());
-    file.close();
-}
-
-void Notepad::on_actionSave_as_triggered()
-{
-    QString filename = QFileDialog::getSaveFileName(this, "Save as");
-    QFile file(filename);
-    currentFile = filename;
-    if(!file.open(QFile:: WriteOnly | QFile::Text)){
-        QMessageBox::warning(this, "Warning", "Cannot save file" + file.errorString());
-        return;
-    }
-    setWindowTitle(filename);
-    QTextStream out(&file);
-    ui->TextWindow->setTextColor(globalCol);
-    QString text = ui->TextWindow->toPlainText();
-    out << text;
-    file.close();
 }
 
 void Notepad::on_actionExit_triggered()
@@ -101,50 +85,9 @@ void Notepad::on_actionRedo_triggered()
     ui->TextWindow->redo();
 }
 
-void Notepad::on_actionRed_triggered()
-{
-    ui->TextWindow->setTextColor(Qt::red);
-    QString color = ui->TextWindow->textColor().name();
-    globalCol = color;
-}
-
-void Notepad::on_actionGreen_triggered()
-{
-    ui->TextWindow->setTextColor(Qt::green);
-    QString color = ui->TextWindow->textColor().name();
-    globalCol = color;
-}
-
-void Notepad::on_actionGray_triggered()
-{
-    ui->TextWindow->setTextColor(Qt::gray);
-    QString color = ui->TextWindow->textColor().name();
-    globalCol = color;
-}
-
-void Notepad::on_actionWhite_triggered()
-{
-    ui->TextWindow->setTextColor(Qt::white);
-    ui->TextWindow->setTextBackgroundColor(Qt::black);
-    QString color = ui->TextWindow->textColor().name();
-    globalCol = color;
-}
-
-void Notepad::on_actionSave_triggered()
-{
-//    QFile file("D:/Notebook/NG_2022_Notebook_project/" + ui->Name->text() + ".txt");
-//    if(!file.open(QFile:: WriteOnly | QFile::Text)){
-//        QMessageBox::warning(this, "Warning", "Cannot save file" + file.errorString());
-//        return;
-//    }
-//    QString text = ui->TextWindow->toPlainText();
-//    file.write(text.toUtf8());
-//    file.close();
-}
-
 void Notepad::systemfile()
 {
-    QFile file("D:/Notebook/NG_2022_Notebook_project/" + ui->Name->text() + ".txt");
+    QFile file("D:/NG_2022_Notebook_project/" + ui->Name->text() + ".txt");
     if(!file.open(QFile:: WriteOnly | QFile::Text)){
         QMessageBox::warning(this, "Warning", "Cannot save file" + file.errorString());
         return;
@@ -152,10 +95,10 @@ void Notepad::systemfile()
     QString text = ui->TextWindow->toPlainText();
     file.write(text.toUtf8());
     file.close();
-    QFile sysfile("D:/Notebook/NG_2022_Notebook_project/Notepad/SystemFile.txt");
+    QFile sysfile("D:/NG_2022_Notebook_project/Notepad/SystemFile.txt");
     QString name = ui->Name->text();
     QString tag = ui->Tag->text();
-    QString note = name + ":" + tag + "\n";
+    QString note = name + ":" + tag + ":" + globalCol.toUtf8() + "\n";
     if(!sysfile.isOpen()){
         sysfile.open(QIODevice::Append);
         sysfile.write(note.toUtf8());
@@ -166,7 +109,7 @@ void Notepad::systemfile()
 void Notepad::search()
 {
     ui->ListW->clear();
-    QFile file("D:/Notebook/NG_2022_Notebook_project/Notepad/SystemFile.txt");
+    QFile file("D:/NG_2022_Notebook_project/Notepad/SystemFile.txt");
     if(!file.isOpen()){
         file.open(QIODevice::ReadOnly);
         QString ntfile = file.readAll();
@@ -174,10 +117,10 @@ void Notepad::search()
         QStringList list = ntfile.split("\n");
         qDebug() << "List = " << list;
         foreach(QString item, list)
-            qDebug() << "List item = " << item;
+        qDebug() << "List item = " << item;
         QString name = ui->Name->text();
         QString tag = ui->Tag->text();
-        QString note = name + ":" + tag + "\n";
+        QString note = name + ":" + tag + globalCol.toUtf8() + "\n";
         qDebug() << note;
         qDebug () << "This is name: " <<name ;
         qDebug () << "This is note: " <<tag ;
@@ -186,12 +129,12 @@ void Notepad::search()
             if((name != ""  && name == input.at(0))){
                 if(tag == "" || tag == input.at(1)){
                     qDebug() << item;
-                    ui->ListW->addItem(item);
+                    ui->ListW->addItem(input.at(0) +  ":" + input.at(1));
                 }
             }
             else if (tag != "" && tag == input.at(1)){
                 qDebug() << item;
-                ui->ListW->addItem(item);
+                ui->ListW->addItem(input.at(0) +  ":" + input.at(1));
             }
             else if(tag =="" && name == ""){
                 ui->ListW->clear();
@@ -203,7 +146,9 @@ void Notepad::search()
 
 void Notepad::addfiles()
 {
-    QFile filename("D:/Notebook/NG_2022_Notebook_project/Notepad/SystemFile.txt");
+    QFile filename("D:/NG_2022_Notebook_project/Notepad/SystemFile.txt");
+    QString textColor;
+    QString userText;
     if(!filename.isOpen()){
         filename.open(QIODevice::ReadOnly);
         QString ntfile = filename.readAll();
@@ -218,10 +163,18 @@ void Notepad::addfiles()
             if(tag == input.at(1)){
                 name = input.at(0);
             }
+            else if(name == input.at(0)){
+                tag = input.at(1);
+            }
+            if(name == input.at(0) || tag == input.at(1)){
+                textColor = input.at(2);
+                qDebug() << "TEXTCOLOR ++++"<<textColor;
+            }
         }
-        QFile secondfile("D:/Notebook/NG_2022_Notebook_project/" + name + ".txt");
+    QFile secondfile("D:/NG_2022_Notebook_project/" + name + ".txt");
         if(!secondfile.isOpen()){
             secondfile.open(QIODevice::ReadWrite);
+            ui->TextWindow->setTextColor(textColor);
             ui->TextWindow->setText(secondfile.readAll());
             secondfile.close();
         }
@@ -232,5 +185,40 @@ void Notepad::addfiles()
 void Notepad::deleteitem()
 {
     QListWidgetItem *it = ui->ListW->takeItem(ui->ListW->currentRow());
-        delete it;
+    delete it;
+}
+
+void Notepad::setRedColor()
+{
+    ui->TextWindow->setTextColor(Qt::red);
+    QString color = ui->TextWindow->textColor().name();
+    globalCol = color;
+}
+
+void Notepad::setBlueColor()
+{
+    ui->TextWindow->setTextColor(Qt::blue);
+    QString color = ui->TextWindow->textColor().name();
+    globalCol = color;
+}
+
+void Notepad::setYellowColor()
+{
+    ui->TextWindow->setTextColor(Qt::yellow);
+    QString color = ui->TextWindow->textColor().name();
+    globalCol = color;
+}
+
+void Notepad::setGreenColor()
+{
+    ui->TextWindow->setTextColor(Qt::green);
+    QString color = ui->TextWindow->textColor().name();
+    globalCol = color;
+}
+
+void Notepad::setGrayColor()
+{
+    ui->TextWindow->setTextColor(Qt::gray);
+    QString color = ui->TextWindow->textColor().name();
+    globalCol = color;
 }
