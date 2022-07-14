@@ -77,9 +77,9 @@
    <widget class="QListWidget" name="ListW">
     <property name="geometry">
      <rect>
-      <x>610</x>
+      <x>620</x>
       <y>30</y>
-      <width>161</width>
+      <width>151</width>
       <height>441</height>
      </rect>
     </property>
@@ -97,7 +97,9 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(87, 72, 59);</string>
+     <string notr="true">background-color: rgb(109, 94, 82);
+font: 10pt &quot;Segoe UI&quot;;
+color: rgb(231, 219, 202);</string>
     </property>
     <property name="text">
      <string>Delete</string>
@@ -113,23 +115,27 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(87, 72, 59);</string>
+     <string notr="true">background-color: rgb(109, 94, 82);
+font: 10pt &quot;Segoe UI&quot;;
+color: rgb(231, 219, 202);</string>
     </property>
     <property name="text">
      <string>Search</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="Name_2">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>490</y>
+      <y>480</y>
       <width>51</width>
       <height>21</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(254, 244, 233);</string>
+     <string notr="true">background-color: rgb(231, 219, 202);
+font: 10pt &quot;Segoe UI&quot;;
+color: rgb(20, 20, 20);</string>
     </property>
     <property name="text">
      <string>Name</string>
@@ -139,13 +145,15 @@
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>490</y>
+      <y>480</y>
       <width>51</width>
-      <height>20</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(254, 244, 233);</string>
+     <string notr="true">background-color: rgb(231, 219, 202);
+font: 10pt &quot;Segoe UI&quot;;
+color: rgb(20, 20, 20);</string>
     </property>
     <property name="text">
      <string>Tag</string>
@@ -161,7 +169,9 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(87, 72, 59);</string>
+     <string notr="true">background-color: rgb(106, 92, 79);
+font: 10pt &quot;Segoe UI&quot;;
+color: rgb(231, 219, 202);</string>
     </property>
     <property name="text">
      <string>Add</string>
@@ -226,7 +236,7 @@
   </action>
   <action name="actionCopy">
    <property name="icon">
-    <iconset>
+    <iconset resource="Resources.qrc">
      <normaloff>:/imgs/Icons/Copy.jpg</normaloff>:/imgs/Icons/Copy.jpg</iconset>
    </property>
    <property name="text">
@@ -235,7 +245,7 @@
   </action>
   <action name="actionPaste">
    <property name="icon">
-    <iconset>
+    <iconset resource="Resources.qrc">
      <normaloff>:/imgs/Icons/Paste.jpg</normaloff>:/imgs/Icons/Paste.jpg</iconset>
    </property>
    <property name="text">
@@ -244,7 +254,7 @@
   </action>
   <action name="actionCut">
    <property name="icon">
-    <iconset>
+    <iconset resource="Resources.qrc">
      <normaloff>:/imgs/Icons/Cut.jpg</normaloff>:/imgs/Icons/Cut.jpg</iconset>
    </property>
    <property name="text">
@@ -271,6 +281,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
