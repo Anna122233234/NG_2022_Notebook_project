@@ -117,10 +117,10 @@ void Notepad::search()
         QStringList list = ntfile.split("\n");
         qDebug() << "List = " << list;
         foreach(QString item, list)
-        qDebug() << "List item = " << item;
+            qDebug() << "List item = " << item;
         QString name = ui->Name->text();
         QString tag = ui->Tag->text();
-        QString note = name + ":" + tag + globalCol.toUtf8() + "\n";
+        QString note = name + ":" + tag + ":" + globalCol.toUtf8() + "\n";
         qDebug() << note;
         qDebug () << "This is name: " <<name ;
         qDebug () << "This is note: " <<tag ;
@@ -131,13 +131,13 @@ void Notepad::search()
                     qDebug() << item;
                     ui->ListW->addItem(input.at(0) +  ":" + input.at(1));
                 }
-            }
-            else if (tag != "" && tag == input.at(1)){
+         }
+            else if (name == "" && tag != "" && tag == input.at(1)){
                 qDebug() << item;
                 ui->ListW->addItem(input.at(0) +  ":" + input.at(1));
             }
-            else if(tag =="" && name == ""){
-                ui->ListW->clear();
+            else if(tag == "" && name == ""){
+                ui->ListW->addItem(input.at(0) +  ":" + input.at(1));
             }
         }
         file.close();
