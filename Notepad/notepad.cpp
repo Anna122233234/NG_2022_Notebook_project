@@ -131,7 +131,7 @@ void Notepad::search()
                     qDebug() << item;
                     ui->ListW->addItem(input.at(0) +  ":" + input.at(1));
                 }
-         }
+            }
             else if (name == "" && tag != "" && tag == input.at(1)){
                 qDebug() << item;
                 ui->ListW->addItem(input.at(0) +  ":" + input.at(1));
@@ -171,7 +171,7 @@ void Notepad::addfiles()
                 qDebug() << "TEXTCOLOR ++++"<<textColor;
             }
         }
-    QFile secondfile("D:/NG_2022_Notebook_project/" + name + ".txt");
+        QFile secondfile("D:/NG_2022_Notebook_project/" + name + ".txt");
         if(!secondfile.isOpen()){
             secondfile.open(QIODevice::ReadWrite);
             ui->TextWindow->setTextColor(textColor);

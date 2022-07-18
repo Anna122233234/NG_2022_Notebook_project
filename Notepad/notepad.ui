@@ -31,6 +31,10 @@
   <property name="windowTitle">
    <string>Notepad</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>C:/Users/Анна/Desktop/notepad (1).png</normaloff>C:/Users/Анна/Desktop/notepad (1).png</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(231, 219, 202);</string>
   </property>
